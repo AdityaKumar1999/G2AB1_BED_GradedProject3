@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Ticket Tracker Application</title>
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+
+</head>
+<body>
+
+	<div align="center">
+		<h1>List of Tickets</h1>
+		<form th:action="@{/}">
+			Filter:<input type="text" name="keyword" id="keyword" size="15"
+				th:value="${keyword}" />&nbsp; <input type="submit" value="Search" />&nbsp;
+			<a th:href="@{/showNewTicketTrackerForm}"
+				class="btn btn-primary btn-sm mb-3"> Add Tickets </a>
+		</form>
+		<style >
+table.tbl {
+	width: 900px;
+	border-collapse: collapse;
+}
+
+.tbl th, .tbl td {
+	border: solid 1px #777;
+	padding: 5px;
+}
+
+.tbl thead {
+	background-color: lightblue;
+}
+</style>
+		<table border="1" class="tbl table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th>Ticket Title</th>
+					<th>Ticket Short Description</th>
+					<th>Ticket Created On</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="TicketTrackers : ${listTicketTrackers}">
+					<td th:text="${TicketTrackers.ticketTitle}"></td>
+					<td th:text="${TicketTrackers.ticketShortDesc}"></td>
+					<td th:text="${TicketTrackers.ticketCreatedOn}"></td>
+					<td><a
+						th:href="@{/showFormForUpdate/{id}(id=${TicketTrackers.id})}"
+						class="btn btn-primary">Update</a> <a
+						th:href="@{/deleteTicketTracker/{id}(id=${TicketTrackers.id})}"
+						class="btn btn-danger">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
